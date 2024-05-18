@@ -17,6 +17,14 @@ class Supplier(models.Model):
     phone = models.CharField('Номер телефона', max_length=200)
     email = models.CharField('E-mail', max_length=200)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Поставщиков'
+        verbose_name_plural = 'Поставщики'
+
+
 class Flower(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Категория')
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Поставщик')
@@ -24,6 +32,15 @@ class Flower(models.Model):
     img = models.ImageField('Фото', upload_to='flowers')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     markup = models.DecimalField(max_digits=10, decimal_places=2)
+    accounted_quantity = models.IntegerField(default=0)
+    actual_quantity = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Цветы'
+        verbose_name_plural = 'Цветы'
 
 
 
