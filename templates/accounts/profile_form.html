@@ -2,50 +2,60 @@
 {% block title %}Изменить профиль{% endblock %}
 {% block content %}
 <main style="margin-top:7rem;" role="main">
-
-    <h1>Profile Detail</h1>
+<div class="d-flex justify-content-between align-items-center">
+        <h1>Детали профиля</h1>
+        <a href="{% url 'logout' %}" class="btn btn-danger">Выйти</a>
+    </div>
         <form method="post">
             {% csrf_token %}
             <div class="form-group">
                 <label for="name">ФИО:</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ profile.name }}">
                 {% if not profile.name %}
-                <small class="form-text text-muted">Please fill out your full name.</small>
+                <small class="form-text text-muted">Введите свое ФИО:</small>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="birth_day">Дата рождения:</label>
                 <input type="date" class="form-control" id="birth_day" name="birth_day" value="{{ profile.birth_day|date:'Y-m-d' }}">
                 {% if not profile.birth_day %}
-                <small class="form-text text-muted">Please fill out your birth date.</small>
+                <small class="form-text text-muted">Введите свое день рождение:</small>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="city">Город:</label>
                 <input type="text" class="form-control" id="city" name="city" value="{{ profile.city }}">
                 {% if not profile.city %}
-                <small class="form-text text-muted">Please fill out your city.</small>
+                <small class="form-text text-muted">Введите свой город:</small>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="adres">Адрес:</label>
                 <input type="text" class="form-control" id="adres" name="adres" value="{{ profile.adres }}">
                 {% if not profile.adres %}
-                <small class="form-text text-muted">Please fill out your address.</small>
+                <small class="form-text text-muted">Введите свой адрес::</small>
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="adres">Дом:</label>
+                <input type="text" class="form-control" id="home" name="home" value="{{ profile.home }}">
+                {% if not profile.home %}
+                <small class="form-text text-muted">Введите свой номер дома:</small>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="phone">Номер телефона:</label>
                 <input type="text" class="form-control" id="phone" name="phone" value="{{ profile.phone }}">
                 {% if not profile.phone %}
-                <small class="form-text text-muted">Please fill out your phone number.</small>
+                <small class="form-text text-muted">Введите свой номер телефона:</small>
                 {% endif %}
             </div>
             <div class="form-group">
                 <label for="email">E-mail:</label>
                 <input type="email" class="form-control" id="email" name="email" value="{{ profile.email }}">
                 {% if not profile.email %}
-                <small class="form-text text-muted">Please fill out your email.</small>
+                <small class="form-text text-muted">Введите свой эл. почту</small>
                 {% endif %}
             </div>
             <button type="submit" class="btn btn-primary">Save</button>

@@ -48,20 +48,9 @@ class RegisterPage(FormView):
 
 class UpdateProfileView(UpdateView):
     model = Profile
-    fields = 'name', 'birth_day', 'city', 'adres', 'phone', 'email'
+    fields = 'name', 'birth_day', 'city', 'adres', 'home', 'phone', 'email'
     success_url = reverse_lazy('index')
 
-
-class ProfileDetailView(DetailView):
-    model = User
-    template_name = 'accounts/author.html'
-    context_object_name = 'author'
-
-    def get_context_data(self, **kwargs):
-        context = super(ProfileDetailView, self).get_context_data()
-        profile_posts = Flower.objects.filter(archived=False, user=self.object.id)
-        context['profile_posts'] = profile_posts
-        return context
 
 
 def update_profile(request, user_id):

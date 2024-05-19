@@ -11,12 +11,13 @@ class Profile(models.Model):
     birth_day = models.DateTimeField(verbose_name='Дата рождения', blank=True, null=True)
     city = models.CharField(verbose_name='Город', max_length=200, blank=True, null=True)
     adres = models.CharField(verbose_name='Адрес', max_length=200, blank=True, null=True)
+    home = models.CharField(verbose_name='Дом', max_length=200, blank=True, null=True)
     phone = models.CharField(verbose_name='Номер телефона', max_length=200, blank=True, null=True)
     email = models.CharField(verbose_name='E-mail', max_length=200, blank=True, null=True)
     discount = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.user}'s profile"
+        return f"{self.user}'s profile, {self.name}"
 
     class Meta:
         verbose_name = 'Профиль'
