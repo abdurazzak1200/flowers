@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{%block title%}
+Home
+{% endblock %}
+{% block content %}
+
+
+<main>
+    <div style="background: transparent;" class="container">
+        <ul class="header__list">
+            <li class="header__list-item">
+                <a href="{% url 'index' %}">All</a>
+            </li>
+            {% for category in categoryes %}
+            <li class="header__list-item">
+                <a href="{% url 'category_list' category.slug %}">{{category.name}}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <section class="content">
+        <div class="container">
+            <div class="content__row">
+                {% for post in flowers %}
+                <div class="content__card">
+                    <a style="display:block;" href="">
+                        <img class="content__card-img"
+                             src="{{post.img.url}}" alt="">
+                    </a>
+                    <div class="content__user">
+                        <h3 class="content__user-title">
+                            {{post.name}}
+                        </h3>
+                        <div class="content__user-social">
+                            <div  style="
+								background: url();
+								width:40px;
+								height:40px;
+								display: inline-block;
+								background-position: center;
+								background-size: cover;
+								border-radius: 100%;
+								" class="header__admin-image content__user-image">
+
+                            </div>
+                            <a href="" class="header__admin-link content__user-link">
+<!--                                {{post.user.username}}-->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="container">
+            <div style="background: white; display: inline-block; padding: 7px 15px;border-radius: 5px;
+                        margin-top:2rem;" class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+                    <span class="current">
+                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %} {{author.username}}{% endblock %}
+{% block content %}
+{% load static %}
+<main>
+	<section class="admin">
+		<div class="admin__background" style="background: url('{{ author.profile.bg.url }}');
+												background-position: center center;
+												background-size: cover;
+												">
+
+		</div>
+		<div class="container">
+			<div class="admin__block">
+				<div class="admin__image" style="
+					background: url({{ author.profile.image.url }});
+					width:170px;
+					height:170px;
+					display: inline-block;
+					background-position: center;
+					background-size: cover;
+					border-radius: 100%;
+					margin-top: -125px;
+					"></div>
+			</div>
+			<h2 class="admin__title">
+				{{author.username}}
+			</h2>
+			{% if author.profile.bio %}
+			<p class="admin__descr">
+				{{author.profile.bio}}
+			</p>
+			{% else %}
+			<p class="admin__descr">
+				Биография отсутствует
+			</p>
+			{% endif %}
+
+			{% if author.profile.id == user.profile.id  %}
+			<div style="margin: 3rem 0" class="right">
+				{% if author.username == 'admin' %}
+				<a style="margin: 1rem 1rem;background:#4CAF50; padding: 7px 15px; border-radius:10px; color: #fff" href="{% url 'category-create' %}"><span class="align-middle">
+					Добавить категории
+					</span>
+				</a>
+				{% endif %}
+				<a style="margin: 1rem 1rem;background:#4CAF50; padding: 7px 15px; border-radius:10px; color: #fff; display: inline-block"  href="{% url 'post-create' %}"><span class="align-middle">Добавить пост</span></a>
+				<a style="margin: 2rem 1rem;1rem;background:#4CAF50; padding: 7px 15px; border-radius:10px; color: #fff; display: inline-block" href="{% url 'update_profile' user.profile.id %}"><span class="align-middle">Изменить профиль</span></a>
+
+				<a style="margin: 2rem 1rem;background:#4CAF50; padding: 7px 15px; border-radius:10px; color: #fff; display: inline-block" href="{% url 'archived_post' %}"><span class="align-middle">Архивы</span></a>
+				<a style="margin: 2rem 1rem;background:#4CAF50; padding: 7px 15px; border-radius:10px; color: #fff; display: inline-block" href="{% url 'logout' %}"><span class="align-middle">Выйти</span></a>
+			</div>
+			{% endif %}
+		</div>
+		</div>
+	</section>
+	<section class="myPosts">
+		<div class="container">
+			<h2 class="myPosts__title">
+				My posts
+			</h2>
+			<div class="content__row">
+				{% if profile_posts %}
+				{% for profile_post in profile_posts %}
+				<div class="content__card">
+					<a href="{% url 'detail_post' profile_post.id %}">
+					<img class="content__card-img"
+						 src="{{profile_post.img.url}}" alt=""></a>
+					<div class="content__user">
+						<h3 class="content__user-title">
+							{{profile_post.title}}
+						</h3>
+						<div class="content__user-social">
+							<div style="background: url({{ profile_post.user.profile.image.url }});
+								width:40px;
+								height:40px;
+								display: inline-block;
+								background-position: center;
+								background-size: cover;
+								border-radius: 100%;
+								" class="header__admin-image content__user-image">
+							</div>
+							<a href="{% url 'detail-profile' profile_post.user.id %}" class="header__admin-link content__user-link">
+								{{profile_post.user.username}}
+							</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+				{% else %}
+				<h5 style="margin-left: 4rem">Посты отсутствую</h5>
+				{% endif %}
+			</div>
+		</div>
+	</section>
+</main>
+
+{% endblock %}

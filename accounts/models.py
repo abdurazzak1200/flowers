@@ -8,11 +8,11 @@ from PIL import Image
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(verbose_name='ФИО', max_length=200)
-    birth_day = models.DateTimeField(verbose_name='Дата рождения')
-    city = models.CharField(verbose_name='Город', max_length=200)
-    adres = models.CharField(verbose_name='Адрес', max_length=200)
-    phone = models.CharField(verbose_name='Номер телефона', max_length=200)
-    email = models.CharField(verbose_name='E-mail', max_length=200)
+    birth_day = models.DateTimeField(verbose_name='Дата рождения', blank=True, null=True)
+    city = models.CharField(verbose_name='Город', max_length=200, blank=True, null=True)
+    adres = models.CharField(verbose_name='Адрес', max_length=200, blank=True, null=True)
+    phone = models.CharField(verbose_name='Номер телефона', max_length=200, blank=True, null=True)
+    email = models.CharField(verbose_name='E-mail', max_length=200, blank=True, null=True)
     discount = models.IntegerField(default=0)
 
     def __str__(self):
