@@ -1,76 +1,67 @@
 {% extends 'base.html' %}
-{% load static %}
-{%block title%}
-Home
-{% endblock %}
+
+{% block title %}Цветы в ассортименте{% endblock %}
+
 {% block content %}
-
-
-<main>
-    <div style="background: transparent;" class="container">
-        <ul class="header__list">
-            <li class="header__list-item">
-                <a href="{% url 'index' %}">All</a>
-            </li>
-            {% for category in categoryes %}
-            <li class="header__list-item">
-                <a href="{% url 'category_list' category.slug %}">{{category.name}}</a>
-            </li>
-            {% endfor %}
-        </ul>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h1>Цветы в ассортименте</h1>
+        </div>
     </div>
-    <section class="content">
-        <div class="container">
-            <div class="content__row">
-                {% for post in flowers %}
-                <div class="content__card">
-                    <a style="display:block;" href="">
-                        <img class="content__card-img"
-                             src="{{post.img.url}}" alt="">
-                    </a>
-                    <div class="content__user">
-                        <h3 class="content__user-title">
-                            {{post.name}}
-                        </h3>
-                        <div class="content__user-social">
-                            <div  style="
-								background: url();
-								width:40px;
-								height:40px;
-								display: inline-block;
-								background-position: center;
-								background-size: cover;
-								border-radius: 100%;
-								" class="header__admin-image content__user-image">
-
-                            </div>
-                            <a href="" class="header__admin-link content__user-link">
-<!--                                {{post.user.username}}-->
-                            </a>
-                        </div>
-                    </div>
-                </div>
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group" role="group" aria-label="Категории">
+                <a href="{% url 'index' %}" class="btn btn-secondary">Все</a>
+                {% for category in categoryes %}
+                    <a href="{% url 'category_list' category.slug %}" class="btn btn-secondary">{{ category.name }}</a>
                 {% endfor %}
             </div>
         </div>
-        <div class="container">
-            <div style="background: white; display: inline-block; padding: 7px 15px;border-radius: 5px;
-                        margin-top:2rem;" class="pagination">
-                <span class="step-links">
-                    {% if page_obj.has_previous %}
-                        <a href="?page=1">&laquo; first</a>
-                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-                    {% endif %}
-                    <span class="current">
-                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
-                    </span>
-                    {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">next</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-                    {% endif %}
-                </span>
+    </div>
+    <div class="row">
+        {% for flower in flowers %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="{{ flower.img.url }}" class="card-img-top" alt="{{ flower.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ flower.name }}</h5>
+                        <p class="card-text">Цена: {{ flower.price }} сом</p>
+                    </div>
+                </div>
             </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    {% if flowers.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ flowers.previous_page_number }}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% for num in flowers.paginator.page_range %}
+                        {% if flowers.number == num %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% elif num > flowers.number|add:'-3' and num < flowers.number|add:'3' %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    {% if flowers.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ flowers.next_page_number }}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
         </div>
-    </section>
-</main>
+    </div>
+</div>
 {% endblock %}

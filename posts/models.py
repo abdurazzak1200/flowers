@@ -34,6 +34,8 @@ class Flower(models.Model):
     markup = models.DecimalField(max_digits=10, decimal_places=2)
     accounted_quantity = models.IntegerField(default=0)
     actual_quantity = models.IntegerField(default=0)
+    archived = models.BooleanField('Архив', default=False)
+
 
     def __str__(self):
         return self.name
